@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study of Asymmetric Key Cryptography (DH, RSA)</title>
+    
+    <style>
+        /* General Body and Layout */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #e9ecef;
+            color: #343a40;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1100px;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        .long-content {
+            min-height: 150vh; /* Adjusted for this practical */
+            padding-bottom: 50px;
+        }
+
+        /* Header Styling */
+        header {
+            background: #007bff;
+            color: #fff;
+            padding: 1.5rem 0;
+            text-align: center;
+            border-bottom: 5px solid #0056b3;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em; /* Slightly smaller for practical title */
+        }
+
+        header p {
+            font-size: 1.2em;
+        }
+
+        /* Section Styling */
+        .section {
+            background: #fff;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #007bff;
+            border-bottom: 3px solid #dee2e6;
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #007bff, rgba(0, 0, 0, 0));
+            margin: 40px 0;
+        }
+
+        /* Image and Caption Styling */
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .image-container img {
+            max-width: 90%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-caption {
+            font-style: italic;
+            color: #6c757d;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        /* Interactive Card Styling */
+        .info-card {
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .info-card h3 {
+            background: #f8f9fa;
+            color: #495057;
+            padding: 15px;
+            margin: 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .info-card h3:hover {
+            background: #e9ecef;
+        }
+
+        .card-content {
+            padding: 15px;
+            border-top: 1px solid #ced4da;
+            background-color: #ffffff;
+            transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+            max-height: 1000px; /* Sufficiently large for initial state */
+            opacity: 1;
+        }
+
+        .card-content.hidden {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            border-top: none;
+            opacity: 0;
+            visibility: hidden; /* Ensures content is not tabbable when hidden */
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #343a40;
+            color: #fff;
+            margin-top: 30px;
+            border-top: 5px solid #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Study of Asymmetric Key Cryptography</h1>
+            <p>Exploring Diffie-Hellman (DH) and RSA Algorithms</p>
+        </div>
+    </header>
+
+    <div class="container long-content">
+        <section class="section">
+            <h2>Introduction to Asymmetric Key Cryptography 🔑</h2>
+            <p><b>Asymmetric key cryptography</b>, also known as public-key cryptography, uses a pair of mathematically linked keys: a public key and a private key. The public key can be freely distributed, while the private key must be kept secret by its owner. This system enables secure communication, digital signatures, and key exchange without needing a pre-shared secret.</p>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Public_key_encryption.svg" alt="Public and Private Key Pair">
+                <p class="image-caption">The fundamental concept of a public/private key pair.</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="section info-cards">
+            <h2>Key Concepts & Algorithms 💡</h2>
+            <p>Click on each section to understand the core components and algorithms:</p>
+
+            <div class="info-card">
+                <h3 onclick="toggleInfo('key-pair-concept')">1. Public and Private Keys Explained 🌐🔒</h3>
+                <div id="key-pair-concept" class="card-content hidden">
+                    <p>
+                        An asymmetric key pair consists of:
+                        <ul>
+                            <li><b>Public Key:</b> Shared openly. Used for encrypting messages for the owner of the private key, and for verifying digital signatures created by the private key.</li>
+                            <li><b>Private Key:</b> Kept secret by the owner. Used for decrypting messages encrypted with the corresponding public key, and for creating digital signatures.</li>
+                        </ul>
+                        The strength of this system lies in the computational difficulty of deriving the private key from the public key.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3 onclick="toggleInfo('diffie-hellman-info')">2. Diffie-Hellman (DH) Key Exchange 🤝</h3>
+                <div id="diffie-hellman-info" class="card-content hidden">
+                    <div class="image-container">
+                        <img src=" https://upload.wikimedia.org/wikipedia/commons/a/a9/Diffie-Hellman_Key_Exchange.png" alt="Diffie-Hellman Key Exchange Diagram">
+                        <p class="image-caption">Visualizing the Diffie-Hellman key exchange process.</p>
+                    </div>
+                    <p>
+                        The <b>Diffie-Hellman (DH) key exchange</b> is a method of securely exchanging cryptographic keys over a public channel. It allows two parties, Alice and Bob, to establish a shared secret key that can be used for symmetric encryption, even if an eavesdropper is listening to their communication.
+                    </p>
+                    <p>
+                        <b>How it works (simplified):</b>
+                        <ol>
+                            <li>Alice and Bob agree on a public prime number (p) and a public base (g).</li>
+                            <li>Alice chooses a secret integer (a), calculates `A = g^a mod p`, and sends A to Bob.</li>
+                            <li>Bob chooses a secret integer (b), calculates `B = g^b mod p`, and sends B to Alice.</li>
+                            <li>Alice computes `s = B^a mod p`.</li>
+                            <li>Bob computes `s = A^b mod p`.</li>
+                        </ol>
+                        Both Alice and Bob arrive at the same shared secret `s`, which is `g^(ab) mod p`, without ever exchanging their private keys (a and b).
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3 onclick="toggleInfo('rsa-info')">3. RSA Algorithm (Encryption & Digital Signatures) ✍️</h3>
+                <div id="rsa-info" class="card-content hidden">
+                    <div class="image-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Public_key_encryption.svg " alt="Digital Signature Process">
+                        <p class="image-caption">RSA is widely used for digital signatures and encryption.</p>
+                    </div>
+                    <p>
+                        The <b>RSA algorithm</b> (named after Rivest, Shamir, and Adleman) is one of the first public-key cryptosystems and is widely used for secure data transmission. It relies on the computational difficulty of factoring large numbers.
+                    </p>
+                    <p>
+                        <b>Key Generation (simplified):</b>
+                        <ol>
+                            <li>Choose two large prime numbers, `p` and `q`.</li>
+                            <li>Calculate `n = p * q` (the modulus).</li>
+                            <li>Calculate `φ(n) = (p-1)(q-1)` (Euler's totient function).</li>
+                            <li>Choose an integer `e` (public exponent) such that `1 < e < φ(n)` and `e` is coprime to `φ(n)`.</li>
+                            <li>Calculate `d` (private exponent) such that `d * e ≡ 1 (mod φ(n))`.</li>
+                        </ol>
+                        The public key is `(e, n)`. The private key is `(d, n)`.
+                    </p>
+                    <p>
+                        <b>Encryption:</b> To encrypt a message `M` for someone with public key `(e, n)`, compute `C = M^e mod n`.
+                    </p>
+                    <p>
+                        <b>Decryption:</b> To decrypt ciphertext `C` with private key `(d, n)`, compute `M = C^d mod n`.
+                    </p>
+                    <p>
+                        <b>Digital Signatures:</b> RSA can also be used to create digital signatures, ensuring message authenticity and integrity. The sender encrypts a hash of the message with their private key, and the receiver decrypts it with the sender's public key.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="section applications">
+            <h2>Applications and Importance 🚀</h2>
+            <p>Asymmetric key cryptography is fundamental to modern digital security:</p>
+            <ul>
+                <li><b>Secure Web Browsing (HTTPS/SSL/TLS):</b> RSA and DH are used to establish secure connections between your browser and websites.</li>
+                <li><b>Email Security (PGP/S/MIME):</b> Encrypting emails and digitally signing them.</li>
+                <li><b>Digital Signatures:</b> Verifying the authenticity and integrity of software, documents, and transactions.</li>
+                <li><b>Cryptocurrencies:</b> Securing transactions and wallet ownership.</li>
+                <li><b>VPNs (Virtual Private Networks):</b> Establishing secure tunnels for private communication over public networks.</li>
+            </ul>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/Public-Key-Infrastructure.svg" alt="PKI Architecture">
+                <p class="image-caption">Asymmetric keys are the backbone of Public Key Infrastructure (PKI).</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Study of Asymmetric Key Cryptography | By OMKAR PATIL </p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle card content visibility
+        function toggleInfo(id) {
+            const element = document.getElementById(id);
+            if (element.classList.contains('hidden')) {
+                element.classList.remove('hidden');
+                // Set max-height to scrollHeight to enable smooth transition
+                element.style.maxHeight = element.scrollHeight + "px"; 
+                element.style.visibility = 'visible';
+            } else {
+                // Set max-height to 0 before adding 'hidden' class
+                element.style.maxHeight = '0'; 
+                setTimeout(() => {
+                    element.classList.add('hidden');
+                    element.style.visibility = 'hidden';
+                }, 400); // Match CSS transition duration
+            }
+        }
+
+        // Hide all card contents on initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            ['key-pair-concept', 'diffie-hellman-info', 'rsa-info'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
